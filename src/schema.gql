@@ -1,0 +1,112 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Task {
+  id: ID!
+  title: String!
+  description: String!
+  status: String!
+  userId: String!
+  user: User!
+  categories: [Category!]
+}
+
+type Category {
+  id: ID!
+  name: String!
+  color: String
+  user: User!
+  tasks: [Task!]
+}
+
+type User {
+  id: ID!
+  email: String!
+  password: String!
+  isActive: Boolean!
+  name: String!
+  lastname: String!
+  tasks: [Task!]
+  categories: [Category!]
+  category(offset: Int = 0, limit: Int = 10): [Category!]!
+}
+
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
+type Query {
+  sayHello: String!
+  users: [User!]!
+  user(id: ID!): User!
+  category(id: ID!): Category!
+  task(id: Int!): Task!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: ID!): User!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  removeCategory(id: ID!): Category!
+  signup(signupInput: SignUpInput!): AuthResponse!
+  login(loginInput: LoginInput!): AuthResponse!
+  createTask(createTaskInput: CreateTaskInput!): Task!
+  updateTask(updateTaskInput: UpdateTaskInput!): Task!
+  removeTask(id: Int!): Task!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  name: String!
+  lastname: String!
+}
+
+input UpdateUserInput {
+  email: String
+  password: String
+  name: String
+  lastname: String
+  id: String!
+  isActive: Boolean
+}
+
+input CreateCategoryInput {
+  name: String!
+  color: String
+  userId: ID!
+}
+
+input UpdateCategoryInput {
+  name: String
+  color: String
+  userId: ID
+  id: ID!
+}
+
+input SignUpInput {
+  email: String!
+  password: String!
+  name: String!
+  lastname: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input CreateTaskInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateTaskInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
