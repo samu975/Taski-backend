@@ -96,7 +96,7 @@ input CreateTaskInput {
   title: String!
   description: String
   status: String! = "OPEN"
-  expiredAt: DateTime! = "2023-07-28T02:53:26.644Z"
+  expiredAt: DateTime! = "2023-07-28T03:03:26.674Z"
   categoryID: ID!
 }
 
@@ -104,7 +104,7 @@ input UpdateTaskInput {
   title: String
   description: String
   status: String = "OPEN"
-  expiredAt: DateTime = "2023-07-28T02:53:26.644Z"
+  expiredAt: DateTime = "2023-07-28T03:03:26.674Z"
   categoryID: ID
   id: ID!
 }

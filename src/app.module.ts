@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-// import { TaskModule } from './task/task.module';
-// import { CategoryModule } from './category/category.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
@@ -25,11 +23,11 @@ import { TaskModule } from './task/task.module';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'safero99',
-      password: 'safero99',
-      database: 'taskiDB',
+      host: `${process.env.DB_HOST}`,
+      port: +`${process.env.DB_PORT}`,
+      username: `${process.env.DB_USER}`,
+      password: `${process.env.DB_PASSWORD}`,
+      database: `${process.env.DB_NAME}`,
       synchronize: true,
       autoLoadEntities: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
