@@ -46,7 +46,9 @@ export class AuthService {
         token,
         user,
       };
-    } catch (error) {}
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
   async validateUser(id: string): Promise<User> {
@@ -54,9 +56,6 @@ export class AuthService {
     if (!user.isActive) {
       throw new UnauthorizedException('User is not active');
     }
-
-    delete user.password;
-
     return user;
   }
 }

@@ -6,7 +6,11 @@ import { UpdateCategoryInput } from './dto/update-category.input';
 // import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { User } from 'src/users/entities/user.entity';
 import { PaginationArgs } from 'src/common/dto/args/pagination.args';
+import { CurrentUser } from 'src/auth/decorator/currentUser.decorator';
+import { ParseUUIDPipe, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Resolver(() => Category)
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
@@ -14,32 +18,41 @@ export class CategoryResolver {
   @Mutation(() => Category)
   createCategory(
     @Args('createCategoryInput') createCategoryInput: CreateCategoryInput,
+    @CurrentUser() user: User,
   ) {
-    return this.categoryService.create(createCategoryInput);
+    return this.categoryService.create(createCategoryInput, user);
   }
 
-  // @Query(() => [Category], { name: 'categories' })
-  // findAll(@CurrentUser() user: User, @Args() paginationArgs: PaginationArgs) {
-  //   return this.categoryService.findAll(user, paginationArgs);
-  // }
+  @Query(() => [Category], { name: 'categories' })
+  findAll(@CurrentUser() user: User) {
+    return this.categoryService.findAll(user);
+  }
 
   @Query(() => Category, { name: 'category' })
-  findOne(@Args('id', { type: () => ID }) id: string) {
-    return this.categoryService.findOne(id);
+  findOne(
+    @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
+    @CurrentUser() user: User,
+  ) {
+    return this.categoryService.findOne(id, user);
   }
 
   @Mutation(() => Category)
   updateCategory(
     @Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput,
+    @CurrentUser() user: User,
   ) {
     return this.categoryService.update(
       updateCategoryInput.id,
       updateCategoryInput,
+      user,
     );
   }
 
   @Mutation(() => Category)
-  removeCategory(@Args('id', { type: () => ID }) id: string) {
-    return this.categoryService.remove(id);
+  removeCategory(
+    @Args('id', { type: () => ID }) id: string,
+    @CurrentUser() user: User,
+  ) {
+    return this.categoryService.remove(id, user);
   }
 }

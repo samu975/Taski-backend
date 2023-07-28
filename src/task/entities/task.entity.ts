@@ -4,6 +4,7 @@ import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -30,23 +31,15 @@ export class Task {
   status: string;
 
   @Column()
-  @Field(() => String)
-  userId: string;
+  @Field(() => Date)
+  expiredAt: Date;
 
   @ManyToOne(() => User, (user) => user.tasks)
   @Field(() => User)
   user: User;
 
-  @ManyToMany(() => Category, (category) => category.tasks)
-  @JoinTable({
-    name: 'tasks_categories',
-    joinColumn: {
-      name: 'taskId',
-    },
-    inverseJoinColumn: {
-      name: 'categoryId',
-    },
-  })
-  @Field(() => [Category], { nullable: true })
-  categories?: Category[];
+  @ManyToOne(() => Category, (category) => category.tasks)
+  @JoinColumn({ name: 'categoryId' })
+  @Field(() => Category)
+  category: Category;
 }

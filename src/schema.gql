@@ -7,10 +7,15 @@ type Task {
   title: String!
   description: String!
   status: String!
-  userId: String!
+  expiredAt: DateTime!
   user: User!
-  categories: [Category!]
+  category: Category!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Category {
   id: ID!
@@ -29,7 +34,6 @@ type User {
   lastname: String!
   tasks: [Task!]
   categories: [Category!]
-  category(offset: Int = 0, limit: Int = 10): [Category!]!
 }
 
 type AuthResponse {
@@ -41,8 +45,10 @@ type Query {
   sayHello: String!
   users: [User!]!
   user(id: ID!): User!
+  categories: [Category!]!
   category(id: ID!): Category!
-  task(id: Int!): Task!
+  tasks: [Task!]!
+  task(id: ID!): Task!
 }
 
 type Mutation {
@@ -52,11 +58,11 @@ type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   removeCategory(id: ID!): Category!
-  signup(signupInput: SignUpInput!): AuthResponse!
-  login(loginInput: LoginInput!): AuthResponse!
   createTask(createTaskInput: CreateTaskInput!): Task!
   updateTask(updateTaskInput: UpdateTaskInput!): Task!
-  removeTask(id: Int!): Task!
+  removeTask(id: ID!): Task!
+  signup(signupInput: SignUpInput!): AuthResponse!
+  login(loginInput: LoginInput!): AuthResponse!
 }
 
 input CreateUserInput {
@@ -78,13 +84,28 @@ input UpdateUserInput {
 input CreateCategoryInput {
   name: String!
   color: String
-  userId: ID!
 }
 
 input UpdateCategoryInput {
   name: String
   color: String
-  userId: ID
+  id: ID!
+}
+
+input CreateTaskInput {
+  title: String!
+  description: String
+  status: String! = "OPEN"
+  expiredAt: DateTime! = "2023-07-28T02:53:26.644Z"
+  categoryID: ID!
+}
+
+input UpdateTaskInput {
+  title: String
+  description: String
+  status: String = "OPEN"
+  expiredAt: DateTime = "2023-07-28T02:53:26.644Z"
+  categoryID: ID
   id: ID!
 }
 
@@ -98,15 +119,4 @@ input SignUpInput {
 input LoginInput {
   email: String!
   password: String!
-}
-
-input CreateTaskInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateTaskInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }

@@ -14,6 +14,7 @@ import { UsersService } from 'src/users/users.service';
   imports: [
     TypeOrmModule.forFeature([Category, Task, User]),
     forwardRef(() => UsersModule),
+    forwardRef(() => TaskModule),
   ],
   exports: [TypeOrmModule, CategoryService],
 })

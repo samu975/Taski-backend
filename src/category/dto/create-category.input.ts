@@ -12,8 +12,4 @@ export class CreateCategoryInput {
   @IsString()
   @IsOptional()
   color?: string;
-
-  @Field(() => ID)
-  @IsUUID()
-  userId: string;
 }

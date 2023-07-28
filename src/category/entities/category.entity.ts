@@ -7,6 +7,7 @@ import {
   JoinColumn,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -30,7 +31,7 @@ export class Category {
   @Field(() => User)
   user?: User;
 
-  @ManyToMany(() => Task, (task) => task.categories)
+  @OneToMany(() => Task, (task) => task.category)
   @Field(() => [Task], { nullable: true })
   tasks?: Task[];
 }

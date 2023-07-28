@@ -3,10 +3,6 @@ import { AuthService } from './auth.service';
 import { SignUpInput } from './dto/inputs';
 import { AuthResponse } from './types/authtype';
 import { LoginInput } from './dto/inputs/login.input';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { CurrentUser } from './decorator/currentUser.decorator';
-import { User } from 'src/users/entities/user.entity';
 
 @Resolver()
 export class AuthResolver {
@@ -26,6 +22,7 @@ export class AuthResolver {
   // @Query(() => AuthResponse, { name: 'revalidateToken' })
   // @UseGuards(JwtAuthGuard)
   // async revalidateToken(@CurrentUser() user: User) {
+  //   console.log(user);
   //   throw new Error('Not implemented');
   // }
 }

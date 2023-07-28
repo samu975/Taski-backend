@@ -54,22 +54,4 @@ export class UsersResolver {
   removeUser(@Args('id', { type: () => ID }, ParseUUIDPipe) id: string) {
     return this.usersService.remove(id);
   }
-
-  @ResolveField(() => [Category], { name: 'category' })
-  async getListsByUser(
-    @Parent() user: User,
-    @Args() paginationArgs: PaginationArgs,
-  ): Promise<Category[]> {
-    const categories = await this.categoryService.findAll(user, paginationArgs);
-    console.log(categories);
-    return categories;
-  }
-
-  // @ResolveField(() => [Task], { name: 'tasks' })
-  // async getTaskByUser(
-  //   @Parent() user: User,
-  //   @Args() paginationArgs: PaginationArgs,
-  // ): promise<Task[]> {
-  //   return this.taskService.findAll(user.id, paginationArgs);
-  // }
 }

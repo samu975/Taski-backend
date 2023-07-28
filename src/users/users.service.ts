@@ -6,13 +6,15 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { CategoryService } from 'src/category/category.service';
+import { Task } from '../task/entities/task.entity';
 //27f42f77-d908-4eaf-aa43-a9c511880c9b
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    @Inject(forwardRef(() => CategoryService))
     private readonly userRepository: Repository<User>,
+    @Inject(forwardRef(() => CategoryService))
+    private readonly categoryService: CategoryService,
   ) {}
 
   async create(createUserInput: CreateUserInput): Promise<User> {
@@ -21,16 +23,25 @@ export class UsersService {
         ...createUserInput,
         password: await bcrypt.hash(createUserInput.password, 10),
       });
+
+      const savedUser = await this.userRepository.save(newUser);
+
+      const newCategory = await this.categoryService.create(
+        { name: 'Uncategorized', color: 'white' },
+        newUser,
+      );
+      savedUser.categories = [newCategory];
       return this.userRepository.save(newUser);
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find({
+  async findAll(): Promise<User[]> {
+    const users = await this.userRepository.find({
       relations: ['categories', 'tasks'],
     });
+    return users;
   }
 
   async findOne(id: string): Promise<User> {
