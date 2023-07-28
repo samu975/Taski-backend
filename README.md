@@ -6,13 +6,25 @@
 
 Tasking API built with NestJS, TypeORM, GraphQL, and PostgreSQL.
 
-## Installation
+# Dev
+
+1. Clonar el proyecto
+
+2. Copiar el `.env.example` a `.env`
+
+3. Instalar dependencias
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+4. Levantar la imagen de docker
+
+```bash
+$ docker-compose up -d
+```
+
+5. Correr la aplicación:
 
 ```bash
 # development
