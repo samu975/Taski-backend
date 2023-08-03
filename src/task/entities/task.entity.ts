@@ -38,7 +38,7 @@ export class Task {
   @Field(() => User)
   user: User;
 
-  @ManyToOne(() => Category, (category) => category.tasks)
+  @ManyToOne(() => Category, (category) => category.tasks, { cascade: true })
   @JoinColumn({ name: 'categoryId' })
   @Field(() => Category)
   category: Category;

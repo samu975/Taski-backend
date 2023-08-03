@@ -12,7 +12,6 @@ import { Repository } from 'typeorm';
 import { CategoryService } from 'src/category/category.service';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/entities/user.entity';
-import { Category } from 'src/category/entities/category.entity';
 
 @Injectable()
 export class TaskService {
@@ -64,6 +63,7 @@ export class TaskService {
   async findAll(user: User) {
     const task = await this.taskRepository.find({
       where: { user },
+      relations: ['category'],
     });
     task.forEach((task) => {
       task.user = user;
@@ -77,6 +77,7 @@ export class TaskService {
   async findOne(id: string, user: User) {
     const task = await this.taskRepository.findOne({
       where: { id, user: { id: user.id } },
+      relations: ['category'],
     });
     if (!task) {
       throw new NotFoundException(`Task with ID ${id} not found`);
@@ -93,6 +94,7 @@ export class TaskService {
     const taskUpdated = await this.taskRepository.preload({
       ...updateTaskInput,
       id,
+      category: { id: updateTaskInput.categoryID },
     });
 
     taskUpdated.user = currentUser;

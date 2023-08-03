@@ -23,7 +23,7 @@ export class TaskResolver {
 
   @Query(() => [Task], { name: 'tasks' })
   findAll(@CurrentUser() user: User) {
-    // return this.taskService.findAll(user);
+    return this.taskService.findAll(user);
   }
 
   @Query(() => Task, { name: 'task' })
@@ -31,7 +31,7 @@ export class TaskResolver {
     @Args('id', { type: () => ID }) id: string,
     @CurrentUser() user: User,
   ) {
-    // return this.taskService.findOne(id, user);
+    return this.taskService.findOne(id, user);
   }
 
   @Mutation(() => Task)
@@ -47,6 +47,6 @@ export class TaskResolver {
     @Args('id', { type: () => ID }) id: string,
     @CurrentUser() user: User,
   ) {
-    // return this.taskService.remove(id, user);
+    return this.taskService.remove(id, user);
   }
 }

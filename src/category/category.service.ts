@@ -11,11 +11,14 @@ import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { UsersService } from 'src/users/users.service';
+import { Task } from 'src/task/entities/task.entity';
 @Injectable()
 export class CategoryService {
   constructor(
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
+    @InjectRepository(Task)
+    private taskRepository: Repository<Task>,
     @Inject(forwardRef(() => UsersService))
     private userService: UsersService,
     @Inject(forwardRef(() => UsersService))
@@ -84,8 +87,10 @@ export class CategoryService {
     const category = await this.findOne(id, user);
 
     if (!category) {
-      return new NotFoundException(`Category with ID ${id} not found`);
+      throw new NotFoundException(`Category with ID ${id} not found`);
     }
+
+    await this.taskRepository.remove(category.tasks);
 
     return this.categoryRepository.remove(category);
   }
