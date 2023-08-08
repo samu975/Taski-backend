@@ -31,6 +31,7 @@ import { TaskModule } from './task/task.module';
       synchronize: true,
       autoLoadEntities: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
+      url: `${process.env.DATABASE_URL}`,
     }),
     UsersModule,
     AuthModule,
