@@ -72,6 +72,7 @@ export class UsersService {
     try {
       const user = await this.userRepository.preload({
         ...updateUserInput,
+        password: await bcrypt.hash(updateUserInput.password, 10),
         id,
       });
       return await this.userRepository.save(user);
