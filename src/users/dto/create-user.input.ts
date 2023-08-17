@@ -1,7 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
-import { CreateCategoryInput } from 'src/category/dto/create-category.input';
-import { Category } from 'src/category/entities/category.entity';
 
 @InputType()
 export class CreateUserInput {

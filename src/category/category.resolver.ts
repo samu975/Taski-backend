@@ -3,10 +3,10 @@ import { CategoryService } from './category.service';
 import { Category } from './entities/category.entity';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
-import { User } from 'src/users/entities/user.entity';
-import { CurrentUser } from 'src/auth/decorator/currentUser.decorator';
+import { User } from '../users/entities/user.entity';
+import { CurrentUser } from '../auth/decorator/currentUser.decorator';
 import { ParseUUIDPipe, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @UseGuards(JwtAuthGuard)
 @Resolver(() => Category)

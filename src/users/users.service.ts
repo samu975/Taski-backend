@@ -1,13 +1,17 @@
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { CategoryService } from 'src/category/category.service';
-import { Task } from '../task/entities/task.entity';
-//27f42f77-d908-4eaf-aa43-a9c511880c9b
+import { CategoryService } from '../category/category.service';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -51,7 +55,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new NotFoundException('User not found');
     }
     return user;
   }

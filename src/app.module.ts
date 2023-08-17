@@ -6,7 +6,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { AppResolver } from './app.resolver';
 import { join } from 'path';
 import { CategoryModule } from './category/category.module';
 import { TaskModule } from './task/task.module';
@@ -55,6 +54,6 @@ import { TaskModule } from './task/task.module';
   ],
 
   controllers: [],
-  providers: [AppResolver],
+  providers: [],
 })
 export class AppModule {}

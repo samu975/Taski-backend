@@ -6,7 +6,7 @@ import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { SignUpInput } from './dto/inputs';
 import { LoginInput } from './dto/inputs/login.input';
 import * as bcrypt from 'bcrypt';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 describe('AuthService', () => {
   let authService: AuthService;
   let usersService: UsersService;
@@ -94,10 +94,13 @@ describe('AuthService', () => {
       jest.spyOn(bcrypt, 'compareSync').mockReturnValue(true);
       jest.spyOn(authService, 'getTocken').mockReturnValue('test_token');
       const result = await authService.login(loginInput);
+
       expect(result).toEqual({
         token: 'test_token',
-        user: user,
+        user: result,
+        ...result,
       });
+
       expect(usersService.findOneByEmail).toHaveBeenCalledWith(
         loginInput.email,
       );

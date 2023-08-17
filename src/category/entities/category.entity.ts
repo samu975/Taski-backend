@@ -1,11 +1,10 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import { Task } from 'src/task/entities/task.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Task } from '../../task/entities/task.entity';
+import { User } from '../../users/entities/user.entity';
 import {
   Column,
   Entity,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,

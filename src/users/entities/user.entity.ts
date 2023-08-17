@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Category } from 'src/category/entities/category.entity';
-import { Task } from 'src/task/entities/task.entity';
+import { Category } from '../../category/entities/category.entity';
+import { Task } from '../../task/entities/task.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'users' })

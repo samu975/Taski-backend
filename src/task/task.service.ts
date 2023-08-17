@@ -9,9 +9,9 @@ import { UpdateTaskInput } from './dto/update-task.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './entities/task.entity';
 import { Repository } from 'typeorm';
-import { CategoryService } from 'src/category/category.service';
-import { UsersService } from 'src/users/users.service';
-import { User } from 'src/users/entities/user.entity';
+import { CategoryService } from '../category/category.service';
+import { UsersService } from '../users/users.service';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class TaskService {

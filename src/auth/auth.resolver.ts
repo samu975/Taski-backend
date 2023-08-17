@@ -17,12 +17,4 @@ export class AuthResolver {
   async login(@Args('loginInput') loginInput: LoginInput) {
     return await this.authService.login(loginInput);
   }
-
-  // no incluir, no se necesita, dejarlo hasta subir al repo final porque sirve como ejemplo
-  // @Query(() => AuthResponse, { name: 'revalidateToken' })
-  // @UseGuards(JwtAuthGuard)
-  // async revalidateToken(@CurrentUser() user: User) {
-  //   console.log(user);
-  //   throw new Error('Not implemented');
-  // }
 }

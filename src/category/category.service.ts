@@ -1,17 +1,11 @@
-import {
-  Inject,
-  Injectable,
-  NotFoundException,
-  forwardRef,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
-import { UsersService } from 'src/users/users.service';
-import { Task } from 'src/task/entities/task.entity';
+import { Task } from '../task/entities/task.entity';
 @Injectable()
 export class CategoryService {
   constructor(
@@ -19,10 +13,6 @@ export class CategoryService {
     private categoryRepository: Repository<Category>,
     @InjectRepository(Task)
     private taskRepository: Repository<Task>,
-    @Inject(forwardRef(() => UsersService))
-    private userService: UsersService,
-    @Inject(forwardRef(() => UsersService))
-    private taskService: UsersService,
   ) {}
 
   async create(createCategoryInput: CreateCategoryInput, user: User) {
@@ -73,14 +63,12 @@ export class CategoryService {
       return new NotFoundException(`Category with ID ${id} not found`);
     }
 
-    const categoryUpdated = await this.categoryRepository.preload({
-      ...updateCategoryInput,
-      id,
-    });
+    category.name = updateCategoryInput.name || category.name;
+    category.color = updateCategoryInput.color || category.color;
 
-    categoryUpdated.user = user;
+    category.user = user;
 
-    return this.categoryRepository.save(categoryUpdated);
+    return this.categoryRepository.save(category);
   }
 
   async remove(id: string, user: User) {
